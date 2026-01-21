@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ashuu 💖</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family: 'Poppins', sans-serif;}
+body,html{width:100%;height:100%;overflow:hidden;background:black;color:white}
+
+.page{
+  width:100%;
+  height:100vh;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+  transition:1s;
+}
+
+.page.active{display:flex}
+
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:30px;
+  background:#ff4d6d;
+  color:white;
+  font-size:16px;
+  margin-top:20px;
+}
+
+/* MUSIC NOTICE */
+#musicNote{
+  position:fixed;
+  top:0;
+  width:100%;
+  padding:10px;
+  background:#000000cc;
+  text-align:center;
+  z-index:999;
+}
+
+/* PAGE 1 – BOW GAME */
+#bowArea{
+  position:relative;
+  width:250px;
+  height:250px;
+}
+#heart{
+  font-size:80px;
+  position:absolute;
+  top:20px;
+  left:90px;
+}
+#arrow{
+  font-size:60px;
+  position:absolute;
+  bottom:0;
+  left:90px;
+  touch-action:none;
+}
+
+/* ROMANTIC PAGES */
+.romantic{
+  font-size:22px;
+  padding:20px;
+  animation:fade 2s infinite alternate;
+}
+
+@keyframes fade{
+  from{opacity:.6}
+  to{opacity:1}
+}
+
+/* RING BOX */
+.box{
+  width:150px;
+  height:120px;
+  background:linear-gradient(45deg,#222,#555);
+  border-radius:15px;
+  position:relative;
+  transform-style:preserve-3d;
+  transition:1s;
+}
+.box.open{transform:rotateX(45deg)}
+.ring{
+  font-size:50px;
+  display:none;
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="musicNote">Tap anywhere to play music 🎵</div>
+<audio id="music" loop>
+  <source src="https://files.catbox.moe/6x7j2k.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="page active" id="p1" style="background:#1b0033">
+  <h2>Ashuu 💖</h2>
+  <p>Arrow drag karo aur heart hit karo</p>
+  <div id="bowArea">
+    <div id="heart">❤️</div>
+    <div id="arrow">🏹</div>
+  </div>
+</div>
+
+<!-- PAGES 2–9 -->
+<script>
+const lines=[
+"Ashuu tum meri dua ho 💕",
+"Tumhari muskurahat meri duniya hai ✨",
+"Jab tum saath hoti ho sab kuch perfect lagta hai 🌸",
+"Tum meri zindagi ka sabse khoobsurat hissa ho 💖",
+"Har pal tumhara khayal rehta hai 💫",
+"Meri har khushi tum se judi hai 💞",
+"Tum ho to sab kuch ho 😍",
+"Dil sirf tumhara naam leta hai ❤️"
+];
+
+for(let i=0;i<8;i++){
+  document.write(`
+  <div class="page" id="p${i+2}" style="background:hsl(${i*40},70%,30%)">
+    <div class="romantic">${lines[i]}</div>
+    <button onclick="next()">Next</button>
+  </div>
+  `);
+}
+</script>
+
+<!-- PAGE 10 -->
+<div class="page" id="p10" style="background:#000814">
+  <h2>Ashuu 💍</h2>
+  <div class="box" onclick="openBox()"></div>
+  <div class="ring">💍</div>
+  <p id="proposal"></p>
+</div>
+
+<script>
+let page=1;
+function next(){
+  document.getElementById("p"+page).classList.remove("active");
+  page++;
+  document.getElementById("p"+page).classList.add("active");
+}
+
+/* MUSIC FIX */
+const music=document.getElementById("music");
+document.body.addEventListener("click",()=>{
+  music.play().catch(()=>{});
+  document.getElementById("musicNote").style.display="none";
+},{once:true});
+
+/* ARROW DRAG */
+const arrow=document.getElementById("arrow");
+arrow.addEventListener("touchmove",e=>{
+  let t=e.touches[0];
+  arrow.style.left=t.clientX-40+"px";
+  arrow.style.top=t.clientY-40+"px";
+});
+arrow.addEventListener("touchend",()=>{
+  next();
+});
+
+/* RING BOX */
+function openBox(){
+  document.querySelector(".box").classList.add("open");
+  document.querySelector(".ring").style.display="block";
+  document.getElementById("proposal").innerText=
+  "Ashuu 💖 kya tum meri zindagi ka hamesha ka hissa bano gi?";
+}
+</script>
+
+</body>
+</html>
